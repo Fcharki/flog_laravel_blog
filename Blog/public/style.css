@@ -1,0 +1,167 @@
+body {
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #EBF9F7;
+    }
+
+    .attractive-title{
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .bg-green {
+        background-color: #c7daff;
+        /* background-color: #D5A7EB; */
+    }
+
+    .color-greener{
+        color:  #28d49b;
+    }
+
+    .brand-color{
+        color:  #39cd9b;
+    }
+
+    .search-btn {
+        border-radius: 5px;
+        background-color: #43f6ba;
+        border: none;
+        padding: 13px;
+        appearance: button;
+        border-radius: 6px;
+        border-width: 0;
+        box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 2px 0,rgba(0, 0, 0, .07) 0 1px 0 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+        font-size: 100%;
+        font-weight: 500;
+        height: auto;
+        line-height: 1.15;
+        /* margin: 12px 0 0; */
+        outline: none;
+        overflow: hidden;
+        /* padding: 0 25px; */
+        position: relative;
+        text-align: center;
+        text-transform: none;
+        transform: translateZ(0);
+        transition: all .2s,box-shadow .08s ease-in;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+    .search-btn:hover {
+        background-color:  #43dba9;
+    }
+    
+    .login-btn{
+        /* color: orange; */
+        font-weight: 500;
+
+    }
+    .login-btn:hover {
+        color: orange;
+        font-weight: 500;
+    }
+
+
+    .signup-btn{
+        color:  #43dba9;
+        border: 2px solid  #62f8c6;
+        font-weight: 500;
+    }
+
+    .signup-btn:hover{
+        color:  #43dba9;
+        border: 2px solid  #62f8c6;
+        font-weight: 500;
+    }
+
+    .navbar-brand img {
+        width: 90px; 
+        height: 80px; 
+    }
+
+    .read-btn:hover {
+        background-color:#59cd99 ;
+       
+    }
+ 
+
+
+/* CSS */
+.read-btn, .dash {
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #9785F7;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 44px;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  /* width: 100%; */
+}
+
+.read-btn :disabled {
+  cursor: default;
+}
+
+.read-btn :focus {
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}
+
+.card-btn {
+    background-color: #28D49B;
+}
+
+
+.navbar-brand img {
+    width: 90px; 
+    height: 80px; 
+}
+
+
+.card-btn {
+ background-color: #28D49B;
+}
+
+.card-btn:hover {
+ background-color: #43dba9;
+}
+
+.copyright{
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 25px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .custom-image {
+        max-height: 500px; /* Adjust this value as needed */
+    }
+}

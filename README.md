@@ -65,7 +65,7 @@ php artisan serve
 
 ### **7️⃣ Build Frontend Assets**
 ```sh
-npm install && npm run dev
+npm run dev
 ```
 
 Now, visit **http://127.0.0.1:8000** in your browser! 🚀

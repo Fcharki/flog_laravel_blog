@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Notifications\PostLiked;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
-
+use Illuminate\Support\Facades\Log;
 
 
 class PostController extends Controller
@@ -108,20 +108,26 @@ class PostController extends Controller
         
             // Fetch posts associated with the category
             $posts = Post::where('category_id', $categoryId)->get();
+        
+            // Check if no posts were found for the category
+            if ($posts->isEmpty()) {
+                return redirect()->route('home')->with('error', 'No posts found for this category.');
+            }
+        
             // Pass data to the view
             return view('post.category', [
                 'category' => $categoryName->category_name,
                 'posts' => $posts,
                 'categoryId' => $categoryId,
             ]);
-        }
+        }        
 
 
         /**
          * Store a newly created post in storage.
          *
          * @param  \Illuminate\Http\Request  $request
-         * @return \Illuminate\Http\Response
+         * 
          */
         public function store(Request $request)
         {
@@ -148,7 +154,7 @@ class PostController extends Controller
             // Create the post with the validated data
             Post::create($validatedData);
         
-            return redirect()->route("dashboard");
+            return redirect()->route("dashboard")->with('success', 'Post added successfully.');
         }
         
 
@@ -198,7 +204,7 @@ class PostController extends Controller
     // Update the post with the validated data
     $post->update($validatedData);
 
-    return redirect()->route("dashboard");
+    return redirect()->route("dashboard")->with('success', 'Post updated successfully.');
 }
 
                 
@@ -207,20 +213,23 @@ class PostController extends Controller
          * Remove the specified post from storage.
          *
          * @param  \App\Models\Post  $post
-         * @return \Illuminate\Http\Response
+         * 
          */
         public function destroy(Post $post)
         {
             $this->authorize('delete', $post);
-            $post->delete();
-        
+
             try {
                 $post->delete();
+                // Return success as JSON response for AJAX request
                 return response()->json(['success' => true]);
             } catch (\Exception $e) {
-                return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                Log::error($e->getMessage());
+                // Return error as JSON response for AJAX request
+                return response()->json(['success' => false, 'message' => 'Failed to delete post: ' . $e->getMessage()]);
             }
         }
+
 
         public function like(Request $request, Post $post)
         {

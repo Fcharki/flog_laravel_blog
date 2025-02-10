@@ -163,6 +163,7 @@
 </header>
 
 <main class="container my-5">
+@include('layouts.flash-messages')
     <div class="bg-green p-4 rounded shadow-sm">
         <h2 class="display-4 mb-4 text-center attractive-title mb-4 text-shadow">Flog <span class="color-greener">Blog</span></h2>
         <p class="mb-4 text-center intro-text h5 text-muted">Spark your curiosity where thoughts and ideas around things actually matter</p>

@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Review;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Events\ReviewCreated;
+use Illuminate\Support\Facades\Auth;
 
 
 class ReviewController extends Controller
@@ -20,14 +21,14 @@ class ReviewController extends Controller
         ]);
     
         $review = $post->reviews()->create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
     
         // Fire the event that will trigger the notification
         event(new ReviewCreated($review));
     
-        return redirect()->back()->with('status', 'Review added!');
+        return redirect()->back()->with('success', 'Review added!');
     }
     
 
@@ -50,7 +51,7 @@ class ReviewController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        return redirect()->back()->with('status', 'Review updated!');
+        return redirect()->back()->with('success', 'Review updated!');
     }
     
 
@@ -60,7 +61,7 @@ class ReviewController extends Controller
 
     $review->delete();
 
-    return redirect()->back()->with('status', 'Review deleted!');
+    return redirect()->back()->with('success', 'Review deleted!');
 }
 }
 

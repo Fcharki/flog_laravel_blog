@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Events\ReplyCreated;
 use App\Models\Review;
 use App\Models\Reply;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ReplyController extends Controller
 {
@@ -19,14 +21,14 @@ class ReplyController extends Controller
         ]);
     
         $reply = $review->replies()->create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
     
         // Fire the event that will trigger the notification
         event(new ReplyCreated($reply));
     
-        return redirect()->back()->with('status', 'Reply added!');
+        return redirect()->back()->with('success', 'Reply added!');
     }
     
     
@@ -51,7 +53,7 @@ class ReplyController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        return redirect()->back()->with('status', 'Reply updated!');
+        return redirect()->back()->with('success', 'Reply updated!');
     }
 
     public function destroy(Reply $reply)
@@ -60,7 +62,7 @@ class ReplyController extends Controller
     
         $reply->delete();
     
-        return redirect()->back()->with('status', 'Reply deleted!');
+        return redirect()->back()->with('success', 'Reply deleted!');
     }
 }
 

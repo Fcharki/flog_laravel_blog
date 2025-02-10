@@ -97,6 +97,7 @@
     </nav>
 </header>
 <main class="container my-4 col-lg-8">
+    @include('layouts.flash-messages')
 <div class="bg-white p-4 rounded shadow-sm mt-3 me-4">
         <h1 class="display-4 mb-4 fw-600 h1">{{ $post->title }}</h1>
         <img src="{{ Storage::url($post->image) }}" style="width: 100%; height: 300px; object-fit: cover;" alt="Post image" class="img-fluid mb-4">
@@ -134,7 +135,7 @@
                 <form method="POST" action="{{ route('reviews.destroy', $review) }}" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="delete-btn mb-3" onclick="return confirm('Are you sure you want to delete this review?');"><i class="fas fa-trash-alt"></i><span class="mx-1 text-dark text-muted">Delete review</span></button>
+                    <button type="submit" class="delete-btn mb-3" onclick="return confirm('Are you sure you want to delete this review?');"><i class="fas fa-trash-alt text-danger"></i><span class="mx-1 text-dark text-muted">Delete review</span></button>
                 </form>
                 @endif
 
@@ -161,7 +162,7 @@
                             <form method="POST" action="{{ route('replies.destroy', $reply) }}" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="delete-btn mb-2" onclick="return confirm('Are you sure you want to delete this reply?');"><i class="fas fa-trash-alt"></i><span class="mx-1 text-dark text-muted">Delete reply</span></button>
+                                <button type="submit" class="delete-btn mb-2" onclick="return confirm('Are you sure you want to delete this reply?');"><i class="fas fa-trash-alt text-danger"></i><span class="mx-1 text-dark text-muted">Delete reply</span></button>
                             </form>
                             @endif
 

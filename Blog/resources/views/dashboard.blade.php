@@ -36,6 +36,7 @@
     </x-slot>
 
     <div class="py-12">
+        @include('layouts.flash-messages')
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Create Post Button -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
@@ -83,6 +84,7 @@
     </div>
 </x-app-layout>
 <script>
+    
 function deletePost(postId) {
     if (confirm('Are you sure you want to delete this post?')) {
         const form = document.getElementById('delete-form-' + postId);

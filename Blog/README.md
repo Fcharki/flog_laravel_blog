@@ -64,12 +64,18 @@ DB_PASSWORD=your_database_password
 php artisan migrate
 ```
 
-### **5️⃣ Serve the Application**
+### **5️⃣ Run Database Seeders**
+```sh
+php artisan db:seed
+```
+
+
+### **6️⃣ Serve the Application**
 ```sh
 php artisan serve
 ```
 
-### **6️⃣ Build Frontend Assets**
+### **7️⃣ Build Frontend Assets**
 ```sh
 npm install && npm run dev
 ```

@@ -211,25 +211,30 @@
     </div>
     @endif
 
-    <!-- Recent Posts Section -->
-    <div class="row justify-content-center align-items-center mt-4 pt-5">
+<!-- Recent Posts Section -->
+<div class="row justify-content-center align-items-center mt-4 pt-5">
+    @if($recentPosts->count() > 0)
         <h3 class="fw-500 text-muted text-center text-md-start mb-4">Recent Posts</h3>
         <div class="row card-container">
             @foreach($recentPosts as $post)
                 <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4">
                     <div class="card rounded-4 shadow-sm w-100">
-                        <img class="card-img-top rounded-top-4 p-1 border-1 img-fluid" src="{{ Storage::url($post->image) }}" style="width: 100%; height: 200px; object-fit: cover;" alt="Card image cap">
+                        <img class="card-img-top rounded-top-4 p-1 border-1 img-fluid" 
+                             src="{{ Storage::url($post->image) }}" 
+                             style="width: 100%; height: 200px; object-fit: cover;" 
+                             alt="Card image cap">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p class="card-text">{!! $post->excerpt !!}</p>
                             <div class="mt-auto">
-                                <a href="{{ route('posts.show', $post->id) }}" class="btn read-btn card-btn mb-3">Read article</a>
-                                <p><img 
-                                        src="{{ Storage::url($post->user->avatar) }}" 
-                                        alt="{{ $post->user->name }}" 
-                                        class="rounded-circle border-2 border-black" 
-                                        style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
-                                        {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}
+                                <a href="{{ route('posts.show', $post->id) }}" 
+                                   class="btn read-btn card-btn mb-3">Read article</a>
+                                <p>
+                                    <img src="{{ Storage::url($post->user->avatar) }}" 
+                                         alt="{{ $post->user->name }}" 
+                                         class="rounded-circle border-2 border-black" 
+                                         style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+                                    {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}
                                 </p> 
                             </div>
                         </div>
@@ -237,7 +242,11 @@
                 </div>
             @endforeach
         </div>
-    </div>
+    @else
+        <div class="display-6 text-dark text-center my-5">No posts published yet</div>
+    @endif
+</div>
+
 </main>
 <div class="container my-5 pt-4"> 
     <footer class="text-center text-shadow rounded-3 text-lg-start text-dark" style="background-color: #c7daff">

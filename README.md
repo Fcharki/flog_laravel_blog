@@ -67,13 +67,19 @@ php artisan serve
 ```sh
 npm install && npm run dev
 ```
+
 Now, visit **http://127.0.0.1:8000** in your browser! 🚀
+
 ---
-## 📜 License 
-This project is open-source and licensed under the [MIT License](LICENSE).  
+
+## 📜 License
+This project is open-source and licensed under the [MIT License](LICENSE). .  
 You are free to use, modify, and distribute it as long as you include the original license.
+
 ---
-## 📬 Contact 
+
+## 📬 Contact
 For any inquiries or support, reach out via:
 - **Email**: fadma.charki101@gmail.com
 - **GitHub**: [Fcharki](https://github.com/Fcharki/)
+

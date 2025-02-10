@@ -26,7 +26,7 @@ This is a feature-rich **Laravel-powered Blog Application** with modern function
 ### **1️⃣ Clone the Repository**
 ```sh
 git clone https://github.com/Fcharki/flog-laravel-blog.git
-cd flog-laravel-blog
+cd flog_laravel_blog
 ```
 ### **2️⃣ Install Dependencies**
 ```sh

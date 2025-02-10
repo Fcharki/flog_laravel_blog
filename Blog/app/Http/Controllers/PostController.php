@@ -102,17 +102,16 @@ class PostController extends Controller
                 ->select('categories.category_name')
                 ->first();
         
+            // Log category name for debugging purposes
+            Log::info('Category Name: ', ['category' => $categoryName]);
+        
+            // Check if category exists
             if (!$categoryName) {
-                return redirect()->route('home')->with('error', 'Category not found.');
+                return redirect()->route('home')->with('error', 'No posts found for this category.');
             }
         
             // Fetch posts associated with the category
             $posts = Post::where('category_id', $categoryId)->get();
-        
-            // Check if no posts were found for the category
-            if ($posts->isEmpty()) {
-                return redirect()->route('home')->with('error', 'No posts found for this category.');
-            }
         
             // Pass data to the view
             return view('post.category', [
@@ -120,8 +119,8 @@ class PostController extends Controller
                 'posts' => $posts,
                 'categoryId' => $categoryId,
             ]);
-        }        
-
+        }
+        
 
         /**
          * Store a newly created post in storage.

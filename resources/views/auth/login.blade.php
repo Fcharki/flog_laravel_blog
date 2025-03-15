@@ -6,9 +6,9 @@
         @csrf
 
         <!-- login photo -->
-        <div class="border border-secondary p-2 rounded-full  border-purple">
-    <img src="{{ asset('../login3.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="Login Image">
-</div>
+        <div class="border border-secondary p-2 rounded-full centered asset-bg">
+            <img src="{{ asset('../login4.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="Login Image">
+        </div>
 
         <!-- Email Address -->
         <div>

@@ -14,25 +14,31 @@
         <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
         <style>
             
-    .bg-green {
-        background-color: #c7dfff;
+    .bg-grass {
+        background-color: #67a463;
     }
-    .border-purple {
-        border: 1px solid #10bb82;
-        box-shadow: 0 1px   #c7dfff;
-       
+
+    .border-green {
+        box-shadow: 0 1px   #cff;
         padding: 8px;
-        background-color:#43DBA9 ;
+        background-color: rgb(136, 241, 206);
     }
+
+    .asset-bg{
+        background-color: #f2f0f0
+    }
+
     .centered{
-    display: flex; 
+        display: flex; 
         justify-content: center;
         align-items: center;
     }
+
     .image-end{
         display: flex;
         justify-content: end;
     }
+    
     .search-btn {background-color: #28D49B;color: white;border: none;padding: 0.5rem 1rem;cursor: pointer;}
     
         </style>
@@ -40,7 +46,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 ">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0  bg-green ">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-grass">
             <div>
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />

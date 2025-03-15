@@ -2,7 +2,7 @@
     <form method="POST" action="{{ route('register') }}" class="mb-6 margin-bottom">
         @csrf
      <!-- sign up photo -->
-     <div class="border border-secondary p-2 rounded-full image-end  border-purple">
+     <div class="border border-secondary p-2 rounded-full centered asset-bg">
     <img src="{{ asset('../signup.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="sign up Image">
 </div>
 

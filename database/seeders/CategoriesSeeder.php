@@ -3,15 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-// use App\Models\Category; 
-use Illuminate\Support\Facades\DB;
-
-class CategoriesSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+// use App\Model    public function run(): void
     {
         // Define the categories to be inserted
         $categories = [
@@ -29,5 +21,13 @@ class CategoriesSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-    }
+    }s\Category; 
+use Illuminate\Support\Facades\DB;
+
+class CategoriesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+
 }

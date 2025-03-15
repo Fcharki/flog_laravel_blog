@@ -65,18 +65,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/pusher-js@7.0.3/dist/pusher.min.js"></script> -->
 
-    <!-- <script>
-        const beamsClient = new PusherPushNotifications.Client({
-            instanceId: '75b26c5e-c45b-4973-8b3b-60c1ade0cdb9',
-        });
-
-        beamsClient.start()
-            .then(() => beamsClient.addDeviceInterest('hello'))
-            .then(() => console.log('Successfully registered and subscribed!'))
-            .catch(console.error);
-    </script> -->
 </body>
 </html>

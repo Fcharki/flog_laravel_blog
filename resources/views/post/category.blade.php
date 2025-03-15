@@ -116,7 +116,7 @@
 </main>
 <footer class="bg-white text-center py-3 mt-4 border-top">
     <div class="container">
-        <p class="mb-0"> &copy; 2024 Flog Blog. All rights reserved.</p>
+        <p class="mb-0"> &copy; <?php echo date("Y"); ?> Flog Blog. All rights reserved.</p>
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

@@ -285,7 +285,7 @@
                 <div class="row d-flex align-items-center justify-content-center">
                     <div class="col-md-6 text-center">
                         <div class="p-3 copyright">
-                            © 2024 Copyright :
+                            © <?php echo date("Y"); ?> Copyright :
                             <a class="text-dark text-decoration-none text-center copyright h5" href="/">Flog.com</a> | Fadma Charki
                         </div>
                     </div>

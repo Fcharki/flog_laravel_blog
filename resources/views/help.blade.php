@@ -99,7 +99,7 @@
 </main>
 <footer class="bg-white text-center py-3 mt-4 border-top">
     <div class="container">
-        <p class="mb-0"> &copy; 2024 Flog Blog. All rights reserved.</p>
+        <p class="mb-0"> &copy; <?php echo date("Y"); ?> Flog Blog. All rights reserved.</p>
     </div>
 </footer>
 </body>

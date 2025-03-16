@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -59,7 +60,7 @@ class Post extends Model
 
         public function isLikedByUser()
     {
-        return $this->likes()->where('user_id', auth()->id())->exists();
+        return $this->likes()->where('user_id', Auth::user())->exists();
     }
 
     

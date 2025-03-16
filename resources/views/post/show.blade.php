@@ -101,7 +101,8 @@
 <div class="bg-white p-4 rounded shadow-sm mt-3 me-4">
         <h1 class="display-4 mb-4 fw-600 h1">{{ $post->title }}</h1>
         <img src="{{ Storage::url($post->image) }}" style="width: 100%; height: 300px; object-fit: cover;" alt="Post image" class="img-fluid mb-4">
-        <div class="lead col-md-11">{!! $post->body !!}</div><hr class="text-muted my-5 rounded-full shadow-sm"/>
+        <div class="lead col-md-11">{!! $post->body !!}</div>
+        {{-- <hr class="text-muted my-5 rounded-full shadow-sm"/> --}}
         <p class="text-muted">
             <img src="{{ Storage::url($post->user->avatar) }}" alt="{{ $post->user->name }}" class="rounded-circle mx-2 border-2 border-black" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
             <span>Written By {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}</span>

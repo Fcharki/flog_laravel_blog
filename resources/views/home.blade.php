@@ -99,6 +99,24 @@
         color: #000000;
     }
 
+    .transition-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .transition-card:hover {
+        transform: translateY(-5px); 
+        box-shadow: 5px 10px 20px rgba(0,0,0,0.1) !important;
+    }
+
+    .attractive-footer-title {
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+        color:  #197a5a;
+        
+    }
+
+
     </style>
 </head>
 <body>
@@ -218,7 +236,7 @@
         <h3 class="fw-500 text-muted text-center text-md-start mb-4">Recent Posts</h3>
         <div class="row card-container">
             @foreach($recentPosts as $post)
-                <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4">
+                <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4 p-2 transition-card">
                     <div class="card rounded-4 shadow-sm w-100">
                         <img class="card-img-top rounded-top-4 p-2 img-fluid" 
                              src="{{ Storage::url($post->image) }}" 
@@ -256,7 +274,7 @@
             <section class="">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                         <h2 class="attractive-title brand-color mb-3">F<span class="text-dark">log</span></h2>
+                         <h2 class="attractive-footer-title brand-color mb-3">F<span class="text-dark">log</span></h2>
                         <h6 class="text-muted">Share inspiring stories, insightful <br>tips, and diverse perspectives</h6>
                     </div>
                     <hr class="w-100 clearfix d-md-none" />

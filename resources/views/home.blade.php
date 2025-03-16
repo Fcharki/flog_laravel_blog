@@ -220,7 +220,7 @@
             @foreach($recentPosts as $post)
                 <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4">
                     <div class="card rounded-4 shadow-sm w-100">
-                        <img class="card-img-top rounded-top-4 p-1 border-1 img-fluid" 
+                        <img class="card-img-top rounded-top-4 p-2 img-fluid" 
                              src="{{ Storage::url($post->image) }}" 
                              style="width: 100%; height: 200px; object-fit: cover;" 
                              alt="Card image cap">
@@ -229,7 +229,8 @@
                             <p class="card-text">{!! $post->excerpt !!}</p>
                             <div class="mt-auto">
                                 <a href="{{ route('posts.show', $post->id) }}" 
-                                   class="btn read-btn card-btn mb-3">Read article</a>
+                                   class="btn read-btn card-btn mb-2">Read article</a>
+                                   <hr class="text-muted"/>
                                 <p>
                                     <img src="{{ Storage::url($post->user->avatar) }}" 
                                          alt="{{ $post->user->name }}" 

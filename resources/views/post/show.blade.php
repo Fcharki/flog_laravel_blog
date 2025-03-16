@@ -101,15 +101,14 @@
 <div class="bg-white p-4 rounded shadow-sm mt-3 me-4">
         <h1 class="display-4 mb-4 fw-600 h1">{{ $post->title }}</h1>
         <img src="{{ Storage::url($post->image) }}" style="width: 100%; height: 300px; object-fit: cover;" alt="Post image" class="img-fluid mb-4">
-        <div class="lead col-md-11">{!! $post->body !!}</div>
+        <div class="lead col-md-11">{!! $post->body !!}</div><hr class="text-muted my-5 rounded-full shadow-sm"/>
         <p class="text-muted">
             <img src="{{ Storage::url($post->user->avatar) }}" alt="{{ $post->user->name }}" class="rounded-circle mx-2 border-2 border-black" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
             <span>Written By {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}</span>
         </p>
-        <button class="btn mt-2 fw-600" id="more-about-btn" style="color:#F60195">More about {{ $post->user->name }}</button>
+        <button class="btn mt-2 fw-600 fw-bold btn-outline-info my-4" id="more-about-btn" style="color:#F60195">Get to know {{ $post->user->name }}</button>
         <div id="article-owner-details" class="hidden mt-3 row col-md-9 col-sm-12">
-            <p><strong>Occupation:</strong> {{ $post->user->occupation }}</p>
-            <p><strong>Bio:</strong> {{ $post->user->bio }}</p>
+            <p>{{ $post->user->occupation }}, {{ $post->user->bio }}</p>
         </div>
         <form method="POST" action="{{ route('posts.like', $post) }}" id="like-form">
             @csrf

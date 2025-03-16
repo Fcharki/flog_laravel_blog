@@ -60,7 +60,7 @@ class ProfileController extends Controller
 
     $user->save();
 
-    return redirect()->route('profile.edit')->with('success', 'profile-updated');
+    return redirect()->route('profile.edit')->with('success', 'profile updated successfully !');
 }
     
     /**
@@ -86,6 +86,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Account deleted');;
+        return redirect('/')->with('success', 'Account deleted  successfully');;
     }
 }

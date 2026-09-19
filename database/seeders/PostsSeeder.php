@@ -81,6 +81,7 @@ class PostsSeeder extends Seeder
                 'email' => 'sofia.marquez@example.com',
                 'title' => 'The Subtle Art of Color in Product Design',
                 'category' => 'Arts',
+                'image_seed' => 'flog-post-21',
                 'body' => '<h2>Color communicates before words do</h2>'
                     .'<p>Color sets the emotional tone of a product. Warm hues invite, cool tones reassure, '
                     .'and contrast guides attention exactly where it should go.</p>'
@@ -151,7 +152,7 @@ class PostsSeeder extends Seeder
             }
 
             $categoryId = Category::where('category_name', $post['category'])->value('id');
-            $image = 'https://picsum.photos/seed/flog-post-'.($index + 1).'/800/500';
+            $image = 'https://picsum.photos/seed/'.($post['image_seed'] ?? 'flog-post-'.($index + 1)).'/800/500';
 
             Post::updateOrCreate(
                 ['title' => $post['title']],

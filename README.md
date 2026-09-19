@@ -88,6 +88,19 @@ npm install && npm run dev
 ```
 Now, visit **http://127.0.0.1:8000** in your browser! 🚀
 ---
+## 📸 Screenshots
+Drop your screenshots into the `docs/screenshots/` folder using the file names below — they render here automatically.
+
+| Page | Preview |
+|---|---|
+| Home | <img src="docs/screenshots/home.png" alt="Home page" width="600"> |
+| Login | <img src="docs/screenshots/login.png" alt="Login page" width="600"> |
+| Register | <img src="docs/screenshots/register.png" alt="Register page" width="600"> |
+| Category | <img src="docs/screenshots/category.png" alt="Category page" width="600"> |
+| Post details | <img src="docs/screenshots/post.png" alt="Post details page" width="600"> |
+| Dashboard | <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="600"> |
+| Profile | <img src="docs/screenshots/profile.png" alt="Profile" width="600"> |
+---
 ## 📜 License
 This project is open-source and licensed under the [MIT License](LICENSE).  
 You are free to use, modify, and distribute it as long as you include the original license.

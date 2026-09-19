@@ -10,7 +10,7 @@
         @csrf
 
         <!-- login photo -->
-        <div class="p-2 rounded-full centered">
+        <div class="auth-img-ring centered">
     <img src="{{ asset('../forgot3.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="Login Image">
 </div>
         <!-- Email Address -->

@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
+
 class ReviewAdded extends Notification
 {
     use Queueable;
@@ -25,9 +26,9 @@ class ReviewAdded extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('A new review has been added to your post.')
-                    ->action('View Review', url('/posts/'.$this->review->post_id))
-                    ->line('Thank you for using our application!');
+            ->line('A new review has been added to your post.')
+            ->action('View Review', url('/posts/'.$this->review->post_id))
+            ->line('Thank you for using our application!');
     }
 
     public function toArray($notifiable)

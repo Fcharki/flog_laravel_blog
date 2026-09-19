@@ -1,17 +1,18 @@
 <?php
 
 namespace Tests\Feature;
+
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PostLikeTest extends TestCase
 {
     /**
      * A basic feature test example.
-     */ use RefreshDatabase;
+     */
+    use RefreshDatabase;
 
     public function test_user_can_like_and_unlike_a_post()
     {

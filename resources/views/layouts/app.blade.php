@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('${APP_NAME}', 'Flog | Blog') }}</title>
+    <title>{{ config('app.name', 'Flog | Blog') }}</title>
     <!-- Place this script in your HTML's <head> -->
     <script src="https://cdn.tiny.cloud/1/26f6ezvkqjx5utvzvyhqeqv06t9dbtwh0hszelix5jab8fu4/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- Favicon -->
@@ -33,6 +33,9 @@
         .signup-btn, .signup-btn:hover {color: #43dba9; border: 2px solid #62f8c6;font-weight: 500;}
         .card-btn, .card-btn:hover { background-color: #28D49B;}
         .search-btn {background-color: #28D49B;color: white;border: none;padding: 0.5rem 1rem;cursor: pointer;}
+        .btn-brand:hover,
+        .btn-brand:focus {background-color: #1fbf8a !important;color: #fff !important;}
+        .btn-brand:active {background-color: #1aab7c !important;color: #fff !important;}
         .search-results { margin-top: 20px;}
         .search-results .card {margin-bottom: 10px; }
         .dash{background-color: #28D49B;padding:10px;color: #fff !important;font-weight: 400;}

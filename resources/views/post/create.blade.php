@@ -49,7 +49,7 @@
 
                         <!-- Submit Button -->
                         <div class="mt-4">
-                            <x-button class="p-3 search-btn">
+                            <x-button class="btn-brand p-3 search-btn">
                                 {{ __('Create') }}
                             </x-button>
                         </div>

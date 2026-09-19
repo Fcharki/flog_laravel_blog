@@ -6,7 +6,7 @@
         @csrf
 
         <!-- login photo -->
-        <div class="border border-secondary p-2 rounded-full centered asset-bg">
+        <div class="auth-img-ring centered">
             <img src="{{ asset('../login4.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="Login Image">
         </div>
 
@@ -32,14 +32,14 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <input id="remember_me" type="checkbox" class="auth-checkbox rounded border-gray-300 shadow-sm" name="remember">
                 <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                <a class="auth-link underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif

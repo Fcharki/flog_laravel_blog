@@ -14,7 +14,7 @@
             </div>
         </div>
 <!-- Notification List  -->
-<div id="notification-list" class="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg p-4 hidden">
+<div id="notification-list" class="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg p-4 hidden" style="max-width: calc(100vw - 1.5rem);">
     @if(auth()->user()->unreadNotifications->isEmpty())
         <div class="text-gray-500">No new notifications</div>
     @else
@@ -39,11 +39,14 @@
         @include('layouts.flash-messages')
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Create Post Button -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6 text-gray-900">
-                    <a href="{{ route('posts.create') }}" class="p-3 search-btn">+ Create Post</a>
-                </div>
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="p-6 text-gray-900">
+                <a href="{{ route('posts.create') }}" class="p-3 search-btn">
+                    <i class="fas fa-plus me-1"></i>
+                    Create Post
+                </a>
             </div>
+        </div>
 
             <!-- User's Posts -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -54,24 +57,47 @@
                     <ul class="list-disc pl-5">
                         @foreach($posts as $post)
                             <li id="post-{{ $post->id }}" class="mb-2 card p-3">
-                                <img class="card-img-top rounded-top-4" src="{{ Storage::url($post->image) }}" alt="Card image cap" style="width: 100%; height: 200px; object-fit: cover;">
+                                <img class="card-img-top rounded-top-4" src="{{ image_url($post->image) }}" alt="Card image cap" style="width: 100%; height: 200px; object-fit: cover;">
                                 <a href="{{ route('posts.show', $post->id) }}" class="text-gray-900-600 hover:underline card-title h5 fw-600 mt-2">{{ $post->title }}</a>
                                 <p class="text-gray-600 card-body">{!! $post->excerpt !!}</p>
                                 
-                                <!-- Form for Update -->
-                                <div>
-                                    <form action="{{ route('posts.edit', $post->id) }}" method="GET" style="display:inline;">
-                                        @csrf
-                                        <button type="submit" class="btn rounded-3 m-1 search-btn text-light p-2" style="background-color:#88AB2B;">Edit Post</button>
-                                    </form>
+                          <!-- Post Actions -->
+                            <div class="d-flex gap-2 mt-3">
 
-                                    <!-- Form for Delete -->
-                                    <form id="delete-form-{{ $post->id }}" action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="search-btn delete-btn btn rounded-3 text-light m-1 p-2" style="background-color:#8a78ee;" onclick="deletePost('{{ $post->id }}')">Delete Post</button>
-                                    </form>
-                                </div>
+                                <!-- Edit Post -->
+                                <form action="{{ route('posts.edit', $post->id) }}" method="GET">
+                                    @csrf
+                                    <button
+                                        type="submit"
+                                        class="btn rounded-3 text-light px-3 py-2 fw-semibold shadow-sm"
+                                        style="background-color:#88AB2B;"
+                                    >
+                                        <i class="fas fa-edit me-1"></i>
+                                        Edit Post
+                                    </button>
+                                </form>
+
+                                <!-- Delete Post -->
+                                <form
+                                    id="delete-form-{{ $post->id }}"
+                                    action="{{ route('posts.destroy', $post->id) }}"
+                                    method="POST"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="button"
+                                        class="btn rounded-3 text-light px-3 py-2 fw-semibold shadow-sm"
+                                        style="background-color:#8a78ee;"
+                                        onclick="deletePost('{{ $post->id }}')"
+                                    >
+                                        <i class="fas fa-trash-alt me-1"></i>
+                                        Delete Post
+                                    </button>
+                                </form>
+
+                            </div>
                             </li>
                         @endforeach
                     </ul>

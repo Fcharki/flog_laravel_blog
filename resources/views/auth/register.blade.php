@@ -2,7 +2,7 @@
     <form method="POST" action="{{ route('register') }}" class="mb-6 margin-bottom">
         @csrf
      <!-- sign up photo -->
-     <div class="border border-secondary p-2 rounded-full centered asset-bg">
+     <div class="auth-img-ring centered">
     <img src="{{ asset('../signup.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="sign up Image">
 </div>
 
@@ -44,7 +44,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-2">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="auth-link underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 

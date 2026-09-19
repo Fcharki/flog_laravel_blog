@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Events;
 
 use App\Models\Review;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ReviewCreated implements ShouldQueue
 {

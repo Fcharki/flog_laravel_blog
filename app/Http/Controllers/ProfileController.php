@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\ProfileUpdateRequest;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
-
-
 
 class ProfileController extends Controller
 {
@@ -24,45 +22,46 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
-     */public function update(ProfileUpdateRequest $request)
-{
-    $user = $request->user();
+     */
+    public function update(ProfileUpdateRequest $request)
+    {
+        $user = $request->user();
 
-    if ($request->hasFile('avatar')) {
-        $request->validate([
-            'avatar' => 'image|max:2048', // Validate the image and its size
-        ]);
+        if ($request->hasFile('avatar')) {
+            $request->validate([
+                'avatar' => 'image|max:2048', // Validate the image and its size
+            ]);
 
-        // Store the new avatar
-        $path = $request->file('avatar')->store('avatars', 'public');
+            // Store the new avatar
+            $path = $request->file('avatar')->store('avatars', 'public');
 
-         // Optimize the image
-         ImageOptimizer::optimize(storage_path("app/public/{$path}"));
+            // Optimize the image
+            ImageOptimizer::optimize(storage_path("app/public/{$path}"));
 
-        // Delete the old avatar if it exists
-        if ($user->avatar) {
-            Storage::disk('public')->delete($user->avatar);
+            // Delete the old avatar if it exists
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // Update the user's avatar path
+            $user->avatar = $path;
         }
 
-        // Update the user's avatar path
-        $user->avatar = $path;
+        // Update the user's other profile information
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->occupation = $request->input('occupation'); // Update occupation
+        $user->bio = $request->input('bio'); // Update bio
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('success', 'profile updated successfully !');
     }
 
-    // Update the user's other profile information
-    $user->name = $request->input('name');
-    $user->email = $request->input('email');
-    $user->occupation = $request->input('occupation'); // Update occupation
-    $user->bio = $request->input('bio'); // Update bio
-
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
-
-    $user->save();
-
-    return redirect()->route('profile.edit')->with('success', 'profile updated successfully !');
-}
-    
     /**
      * Delete the user's account.
      */
@@ -86,6 +85,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Account deleted  successfully');;
+        return redirect('/')->with('success', 'Account deleted  successfully');
     }
 }

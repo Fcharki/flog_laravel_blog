@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Post;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -49,15 +46,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get the posts for the user.
-     *
-     * @return HasMany
      */
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
-        public function reviews()
+    public function reviews()
     {
         return $this->hasMany(Review::class);
     }
@@ -65,15 +60,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function replies()
     {
         return $this->hasMany(Reply::class);
-    }
-
-    /**
-     * Get the URL for the user's avatar.
-     *
-     * @return string|null
-     */
-    public function getAvatarUrlAttribute(): ?string
-    {
-        return $this->avatar ? Storage::url($this->avatar) : null;
     }
 }

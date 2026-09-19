@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ReviewReplied extends Notification
 {
@@ -25,9 +25,9 @@ class ReviewReplied extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Someone replied to your review.')
-                    ->action('View Reply', url('/posts/'.$this->reply->review->post_id))
-                    ->line('Thank you for using our application!');
+            ->line('Someone replied to your review.')
+            ->action('View Reply', url('/posts/'.$this->reply->review->post_id))
+            ->line('Thank you for using our application!');
     }
 
     public function toArray($notifiable)

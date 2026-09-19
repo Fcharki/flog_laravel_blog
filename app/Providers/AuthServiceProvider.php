@@ -3,13 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Post;
-use App\Models\Review;
 use App\Models\Reply;
+use App\Models\Review;
 use App\Policies\PostPolicy;
-use App\Policies\ReviewPolicy;
 use App\Policies\ReplyPolicy;
+use App\Policies\ReviewPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Review::class => ReviewPolicy::class,
         Reply::class => ReplyPolicy::class,
-        
+
     ];
 
     /**

@@ -2,21 +2,15 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use App\Events\PostLiked;
-use App\Listeners\BroadcastPostLiked;
-use App\Events\ReviewCreated;
 use App\Events\ReplyCreated;
-use App\Listeners\SendReviewNotification;
+use App\Events\ReviewCreated;
 use App\Listeners\SendReplyNotification;
+use App\Listeners\SendReviewNotification;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        PostLiked::class => [
-            BroadcastPostLiked::class,
-        ],
         ReviewCreated::class => [
             SendReviewNotification::class,
         ],

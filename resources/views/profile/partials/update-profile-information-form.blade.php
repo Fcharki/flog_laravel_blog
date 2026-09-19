@@ -14,7 +14,7 @@
 
         <div>
             @if ($user->avatar)
-                <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" class="mt-2 rounded-full avatar-image" id="current-avatar">
+                <img src="{{ image_url($user->avatar) }}" alt="Avatar" class="mt-2 rounded-full avatar-image" id="current-avatar">
             @endif
             <x-input-label for="avatar" :value="__('Avatar')" />
             <input id="avatar" name="avatar" type="file" class="mt-1 block w-full" accept="image/*" onchange="previewImage(event)"/>

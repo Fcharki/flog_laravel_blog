@@ -3,9 +3,9 @@
 namespace App\Events;
 
 use App\Models\Reply;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ReplyCreated implements ShouldQueue
 {

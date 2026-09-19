@@ -25,7 +25,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $this->user()->id,
+            'email' => 'required|email|max:255|unique:users,email,'.$this->user()->id,
             'avatar' => 'nullable|image|max:2048',
             // Add any other rules as needed
         ];

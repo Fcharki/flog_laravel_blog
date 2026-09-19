@@ -57,6 +57,25 @@ php artisan migrate
 php artisan db:seed
 ```
 
+This seeds the database with:
+
+- **20 categories** — Technology, Artificial Intelligence, Web Development, and more.
+- **6 demo users** — each with a bio, occupation, avatar, and verified email:
+  | Name | Email | Occupation |
+  |---|---|---|
+  | Amina El Idrissi | `amina.elidrissi@example.com` | Software Engineer |
+  | Omar Benali | `omar.benali@example.com` | Data Scientist |
+  | Sofia Marquez | `sofia.marquez@example.com` | Product Designer |
+  | James Carter | `james.carter@example.com` | Journalist & Blogger |
+  | Layla Hasnaoui | `layla.hasnaoui@example.com` | Content Strategist |
+  | Noah Williams | `noah.williams@example.com` | Photographer |
+
+  > All demo users log in with the password: `password`
+- **12 demo posts** — two per demo user, each assigned to a category.
+
+> Both demo users and demo posts use **real photos** served from [Lorem Picsum](https://picsum.photos) (`https://picsum.photos/seed/...`), so no local placeholder files are generated. Local uploads made through the app keep using `storage/app/public`.
+
+> The seeders are **idempotent** — re-running `php artisan db:seed` only adds what's missing, so no duplicates are created.
 
 ### **6️⃣ Serve the Application**
 ```sh
@@ -66,7 +85,7 @@ php artisan serve
 ### **7️⃣ Build Frontend Assets**
 ```sh
 npm install && npm run dev
-``
+```
 Now, visit **http://127.0.0.1:8000** in your browser! 🚀
 ---
 ## 📜 License

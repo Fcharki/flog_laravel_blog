@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Events\ReviewCreated;
 use App\Models\Post;
 use App\Models\Review;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Events\ReviewCreated;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 
 class ReviewController extends Controller
 {
@@ -19,18 +18,17 @@ class ReviewController extends Controller
         $request->validate([
             'content' => 'required',
         ]);
-    
+
         $review = $post->reviews()->create([
             'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
-    
+
         // Fire the event that will trigger the notification
         event(new ReviewCreated($review));
-    
+
         return redirect()->back()->with('success', 'Review added!');
     }
-    
 
     public function edit(Review $review)
     {
@@ -53,15 +51,13 @@ class ReviewController extends Controller
 
         return redirect()->back()->with('success', 'Review updated!');
     }
-    
 
     public function destroy(Review $review)
-{
-    $this->authorize('delete', $review);
+    {
+        $this->authorize('delete', $review);
 
-    $review->delete();
+        $review->delete();
 
-    return redirect()->back()->with('success', 'Review deleted!');
+        return redirect()->back()->with('success', 'Review deleted!');
+    }
 }
-}
-

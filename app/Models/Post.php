@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -34,19 +34,16 @@ class Post extends Model
 
     /**
      * Get the user that owns the post.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-        public function reviews()
+    public function reviews()
     {
         return $this->hasMany(Review::class);
     }
-
 
     public function likes()
     {
@@ -58,16 +55,13 @@ class Post extends Model
         return $this->likes()->count();
     }
 
-        public function isLikedByUser()
+    public function isLikedByUser()
     {
-        return $this->likes()->where('user_id', Auth::user())->exists();
+        return $this->likes()->where('user_id', Auth::id())->exists();
     }
 
-    
     /**
      * Get the time ago attribute for the post.
-     *
-     * @return string
      */
     public function getTimeAgoAttribute(): string
     {
@@ -78,12 +72,10 @@ class Post extends Model
     {
         return Str::limit(strip_tags($this->body), 150); // Adjust the length as needed
     }
-    
-        // In Post.php model
+
+    // In Post.php model
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-
-
 }

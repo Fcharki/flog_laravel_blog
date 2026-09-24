@@ -89,7 +89,6 @@ npm install && npm run dev
 Now, visit **http://127.0.0.1:8000** in your browser! 🚀
 ---
 ## 📸 Screenshots
-Drop your screenshots into the `docs/screenshots/` folder using the file names below — they render here automatically.
 
 | Page | Preview |
 |---|---|

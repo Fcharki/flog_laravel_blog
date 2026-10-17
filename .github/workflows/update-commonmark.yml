@@ -1,0 +1,28 @@
+name: Update CommonMark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - run: composer update league/commonmark
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: fix/update-commonmark
+          title: "Fix CommonMark security vulnerability"
+          commit-message: "Update league/commonmark"
+          body: "Update league/commonmark to address the reported vulnerability."

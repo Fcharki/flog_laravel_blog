@@ -5,8 +5,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ReviewController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Authentication routes
@@ -42,30 +40,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
 });
-
-// todo : The Email Verification Notice
-// Route should be defined that will return a view instructing the user to click the email verification
-// link that was emailed to them by Laravel after registration.
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-// todo : The Email Verification Handler
-// route that will handle requests generated when the user clicks the email verification link that was emailed to them
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect()->route('home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-// todo : Resending the Verification Email
-//  route to allow the user to request that the verification email be resent.
-// (Sometimes a user may misplace or accidentally delete the email address verification email)
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // * ***************************************************************************************************************************************
 // Home route

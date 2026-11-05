@@ -9,6 +9,12 @@
         </div>
     @endif
 
+    @if (session('status') == 'verification-link-failed')
+        <div class="mb-4 font-medium text-sm text-red-600">
+            {{ __('Your account was created, but we could not send the verification email. Please try again later.') }}
+        </div>
+    @endif
+
     <div class="mt-4 flex items-center justify-between">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf

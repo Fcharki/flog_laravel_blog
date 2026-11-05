@@ -1,3 +1,4 @@
+```dockerfile
 # ==========================================
 # Stage 1: Install PHP dependencies
 # ==========================================
@@ -66,13 +67,32 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# ==========================================
 # PHP OPcache configuration
+# ==========================================
 RUN echo "opcache.enable=1" > /usr/local/etc/php/conf.d/opcache.ini \
-    && echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/opcache.ini \
-    && echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/opcache.ini \
-    && echo "opcache.revalidate_freq=0" >> /usr/local/etc/php/conf.d/opcache.ini
+    && echo "opcache.memory_consumption=64" >> /usr/local/etc/php/conf.d/opcache.ini \
+    && echo "opcache.interned_strings_buffer=8" >> /usr/local/etc/php/conf.d/opcache.ini \
+    && echo "opcache.max_accelerated_files=10000" >> /usr/local/etc/php/conf.d/opcache.ini \
+    && echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/opcache.ini
 
+# ==========================================
+# PHP-FPM configuration - Render Free Tier
+# ==========================================
+RUN { \
+    echo '[www]'; \
+    echo 'pm = dynamic'; \
+    echo 'pm.max_children = 3'; \
+    echo 'pm.start_servers = 1'; \
+    echo 'pm.min_spare_servers = 1'; \
+    echo 'pm.max_spare_servers = 2'; \
+    echo 'pm.max_requests = 300'; \
+    echo 'request_terminate_timeout = 120s'; \
+} > /usr/local/etc/php-fpm.d/zz-custom.conf
+
+# ==========================================
 # Copy Laravel application
+# ==========================================
 COPY --from=composer-build /app /var/www/html
 
 # Copy compiled frontend assets
@@ -81,7 +101,9 @@ COPY --from=frontend-build /app/public/build /var/www/html/public/build
 # Copy Nginx configuration template
 COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
 
+# ==========================================
 # Laravel directories and permissions
+# ==========================================
 RUN mkdir -p \
     storage/framework/cache \
     storage/framework/sessions \
@@ -109,3 +131,4 @@ CMD ["sh", "-c", "\
     php-fpm -D; \
     exec nginx -g 'daemon off;' \
 "]
+```

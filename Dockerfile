@@ -127,6 +127,7 @@ CMD ["sh", "-c", "\
     rm -f /etc/nginx/sites-enabled/default; \
     nginx -t; \
     php artisan optimize; \
+    php docker/debug-config.php; \
     php-fpm -D; \
     exec nginx -g 'daemon off;' \
 "]

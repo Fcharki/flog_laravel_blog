@@ -128,7 +128,6 @@ CMD ["sh", "-c", "\
     nginx -t; \
     php artisan optimize; \
     php artisan migrate --force; \
-    php docker/debug-config.php; \
     php-fpm -D; \
     exec nginx -g 'daemon off;' \
 "]

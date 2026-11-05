@@ -1,25 +1,15 @@
-pid /tmp/nginx.pid;
-error_log /var/www/html/storage/logs/nginx-error.log warn;
+server {
+    listen ${PORT};
+    server_name _;
 
-events {
-    worker_connections 1024;
-}
+    root /var/www/html/public;
+    index index.php index.html;
 
-http {
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-    access_log /var/www/html/storage/logs/nginx-access.log;
-
-    sendfile on;
-    tcp_nopush on;
-    keepalive_timeout 65;
-
-    # Limit request body size (post covers/avatars). Raise if you allow
-    # larger uploads.
+    # Request limits
     client_max_body_size 20m;
     client_body_timeout 60s;
 
-    # Hide nginx version in responses.
+    # Hide Nginx version
     server_tokens off;
 
     # Compression
@@ -40,49 +30,56 @@ http {
         application/atom+xml
         image/svg+xml;
 
-    server {
-        listen ${PORT};
-        listen [::]:${PORT};
-        server_name _;
-        root /var/www/html/public;
-        index index.php;
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
 
-        # Security headers (applied to all responses).
-        add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-        add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
-        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-        add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'" always;
+    # Enable HSTS only when HTTPS is enforced for the site.
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
-        location / {
-            try_files $uri $uri/ /index.php?$query_string;
-        }
+    add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'" always;
 
-        location ~ \.php$ {
-            try_files $uri =404;
-            fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass 127.0.0.1:9000;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-            include fastcgi_params;
-            fastcgi_hide_header X-Powered-By;
-            fastcgi_read_timeout 60s;
-        }
+    # Laravel routing
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
 
-        # Cache immutable build assets. Uses expires (not add_header) so the
-        # server-level security headers above are still inherited.
-        location ~* \.(?:css|js|jpg|jpeg|gif|png|svg|ico|webp|woff2?)$ {
-            expires 30d;
-            access_log off;
-            try_files $uri =404;
-        }
+    # PHP-FPM
+    location ~ \.php$ {
+        try_files $uri =404;
 
-        location ~ /\.(?!well-known).* {
-            deny all;
-        }
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
 
-        location = /favicon.ico { access_log off; log_not_found off; }
-        location = /robots.txt  { access_log off; log_not_found off; }
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+
+        fastcgi_hide_header X-Powered-By;
+        fastcgi_read_timeout 60s;
+    }
+
+    # Static assets
+    location ~* \.(?:css|js|jpg|jpeg|gif|png|svg|ico|webp|woff2?)$ {
+        expires 30d;
+        access_log off;
+        try_files $uri =404;
+    }
+
+    # Block hidden files
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
+
+    location = /robots.txt {
+        access_log off;
+        log_not_found off;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,16 +30,18 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with(
                 'showNavbarCategories',
-                !in_array($view->getName(), ['about', 'help'], true)
+                ! in_array($view->getName(), ['about', 'help'], true)
             );
 
             if ($view->offsetExists('visibleCategories') || $view->offsetExists('hiddenCategories')) {
                 return;
             }
 
-            $categories = DB::table('categories')
-                ->select('id', 'category_name as name')
-                ->get();
+            $categories = Cache::remember('navbar.categories', now()->addHour(), function () {
+                return DB::table('categories')
+                    ->select('id', 'category_name as name')
+                    ->get();
+            });
 
             $view->with('visibleCategories', $categories->take(10));
             $view->with('hiddenCategories', $categories->slice(10));

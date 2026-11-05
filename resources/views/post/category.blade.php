@@ -53,7 +53,7 @@
                     @endif
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $post->title }}</h5>
-                        <p class="card-text">{!! $post->excerpt !!}</p>
+                        <p class="card-text">{{ $post->excerpt }}</p>
                         <div class="mt-auto">
                             <a href="{{ route('posts.show', $post->id) }}" class="btn search-btn rounded-4 p-2"
                                style="background-color:#28D49B;">

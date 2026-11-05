@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\PostHtmlSanitizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -50,13 +51,28 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function getLikesCountAttribute()
+    /**
+     * Sanitize rich-text bodies on write so unsafe markup is never persisted.
+     */
+    public function setBodyAttribute(?string $value): void
     {
-        return $this->likes()->count();
+        $this->attributes['body'] = PostHtmlSanitizer::clean($value);
     }
 
-    public function isLikedByUser()
+    /**
+     * Sanitize rich-text bodies on read as a safety net for legacy records.
+     */
+    public function getBodyAttribute(?string $value): string
     {
+        return PostHtmlSanitizer::clean($value);
+    }
+
+    public function isLikedByUser(): bool
+    {
+        if (array_key_exists('is_liked_by_user', $this->attributes)) {
+            return (bool) $this->attributes['is_liked_by_user'];
+        }
+
         return $this->likes()->where('user_id', Auth::id())->exists();
     }
 

@@ -188,7 +188,7 @@
                         <img class="card-img-top rounded-top-4 p-1 border-1" src="{{ image_url($post->image) }}" alt="Card image cap" style="width: 100%; height: 150px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text">{!! $post->excerpt !!}</p>
+                            <p class="card-text">{{ $post->excerpt }}</p>
                             <div class="mt-auto">
                                 <a href="{{ route('posts.show', $post->id) }}" class="btn read-btn card-btn mb-3">Read article</a>
                                 <p class="author-meta"><img
@@ -204,6 +204,7 @@
                 </div>
             @endforeach
         </div>
+        {{ $posts->links('pagination::bootstrap-5') }}
     </div>
     @endif
 
@@ -221,7 +222,7 @@
                                  alt="Card image cap">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $post->title }}</h5>
-                                <p class="card-text">{!! $post->excerpt !!}</p>
+                                <p class="card-text">{{ $post->excerpt }}</p>
                                 <div class="mt-auto">
                                     <a href="{{ route('posts.show', $post->id) }}"
                                        class="btn read-btn card-btn my-3">Read article</a>

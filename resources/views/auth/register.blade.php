@@ -3,7 +3,7 @@
         @csrf
      <!-- sign up photo -->
      <div class="auth-img-ring centered">
-    <img src="{{ asset('../signup.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="sign up Image">
+    <img src="{{ asset('signup.jpg') }}" class="rounded-full img-fluid" width="180" height="180" alt="sign up Image">
 </div>
 
         <!-- Name -->

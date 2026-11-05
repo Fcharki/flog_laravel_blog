@@ -6,8 +6,8 @@
 
     <title>Flog | Help Center</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('../icon3.png') }}">
-    <link href="{{ asset('../style.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('icon3.png') }}">
+    <link href="{{ asset('style.css') }}" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -443,7 +443,7 @@
 
             <a class="navbar-brand" href="/">
                 <img
-                    src="{{ asset('../flog-logo.png') }}"
+                    src="{{ asset('flog-logo.png') }}"
                     class="d-inline-block align-top"
                     alt="Flog logo"
                 >

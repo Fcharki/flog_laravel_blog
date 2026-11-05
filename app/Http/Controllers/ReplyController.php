@@ -15,13 +15,13 @@ class ReplyController extends Controller
 
     public function store(Request $request, Review $review)
     {
-        $request->validate([
-            'content' => 'required',
+        $validated = $request->validate([
+            'content' => 'required|string|max:2000',
         ]);
 
         $reply = $review->replies()->create([
             'user_id' => Auth::id(),
-            'content' => $request->content,
+            'content' => $validated['content'],
         ]);
 
         // Fire the event that will trigger the notification
@@ -41,12 +41,12 @@ class ReplyController extends Controller
     {
         $this->authorize('update', $reply);
 
-        $request->validate([
-            'content' => 'required|string',
+        $validated = $request->validate([
+            'content' => 'required|string|max:2000',
         ]);
 
         $reply->update([
-            'content' => $request->input('content'),
+            'content' => $validated['content'],
         ]);
 
         return redirect()->back()->with('success', 'Reply updated!');

@@ -6,7 +6,9 @@
 /storage/*.key
 /vendor
 .env
-.env.backup
+.env.*
+!.env.example
+# Production credentials must stay local and out of Git.
 .env.production
 .phpactor.json
 .phpunit.result.cache

@@ -59,7 +59,7 @@
                             <li id="post-{{ $post->id }}" class="mb-2 card p-3">
                                 <img class="card-img-top rounded-top-4" src="{{ image_url($post->image) }}" alt="Card image cap" style="width: 100%; height: 200px; object-fit: cover;">
                                 <a href="{{ route('posts.show', $post->id) }}" class="text-gray-900-600 hover:underline card-title h5 fw-600 mt-2">{{ $post->title }}</a>
-                                <p class="text-gray-600 card-body">{!! $post->excerpt !!}</p>
+                                <p class="text-gray-600 card-body">{{ $post->excerpt }}</p>
                                 
                           <!-- Post Actions -->
                             <div class="d-flex gap-2 mt-3">

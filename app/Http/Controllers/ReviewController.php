@@ -15,13 +15,13 @@ class ReviewController extends Controller
 
     public function store(Request $request, Post $post)
     {
-        $request->validate([
-            'content' => 'required',
+        $validated = $request->validate([
+            'content' => 'required|string|max:2000',
         ]);
 
         $review = $post->reviews()->create([
             'user_id' => Auth::id(),
-            'content' => $request->content,
+            'content' => $validated['content'],
         ]);
 
         // Fire the event that will trigger the notification
@@ -41,12 +41,12 @@ class ReviewController extends Controller
     {
         $this->authorize('update', $review);
 
-        $request->validate([
-            'content' => 'required|string',
+        $validated = $request->validate([
+            'content' => 'required|string|max:2000',
         ]);
 
         $review->update([
-            'content' => $request->input('content'),
+            'content' => $validated['content'],
         ]);
 
         return redirect()->back()->with('success', 'Review updated!');

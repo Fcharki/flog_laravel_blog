@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Notifications\PostLiked;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -20,7 +21,7 @@ class PostController extends Controller
     /**
      * Display a listing of the user's posts.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function dashboard()
     {
@@ -33,21 +34,12 @@ class PostController extends Controller
 
     /**
      * Get common data for the home page.
-     *
-     * @return array
      */
-    private function getCommonHomePageData()
+    private function getCommonHomePageData(): array
     {
-        $recentPosts = Post::latest()->paginate(9);
-
-        // Fetch all categories
-        $categories = DB::table('categories')->select('id', 'category_name as name')->get();
-
-        // Split categories into visible and hidden
-        $visibleCategories = $categories->take(10);
-        $hiddenCategories = $categories->slice(10);
-
-        return compact('recentPosts', 'visibleCategories', 'hiddenCategories');
+        return [
+            'recentPosts' => Post::query()->with('user')->latest()->paginate(9),
+        ];
     }
 
     public function getHomePagePosts()
@@ -59,10 +51,22 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('query');
-        $posts = Post::where('title', 'like', '%'.$query.'%')
-            ->orWhere('body', 'like', '%'.$query.'%')
-            ->get();
+        $validated = $request->validate([
+            'query' => 'nullable|string|max:100',
+        ]);
+
+        $query = trim($validated['query'] ?? '');
+        $escapedQuery = addcslashes($query, '%_\\');
+
+        $posts = Post::query()
+            ->with('user')
+            ->where(function ($builder) use ($escapedQuery) {
+                $builder->where('title', 'like', "%{$escapedQuery}%")
+                    ->orWhere('body', 'like', "%{$escapedQuery}%");
+            })
+            ->latest()
+            ->paginate(9)
+            ->withQueryString();
 
         $commonData = $this->getCommonHomePageData();
         $commonData['posts'] = $posts;
@@ -80,11 +84,19 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::findOrFail($id);
-        $relatedPosts = Post::where('user_id', $post->user_id)
+        $post = Post::query()
+            ->with(['user', 'reviews.user', 'reviews.replies.user'])
+            ->withCount('likes')
+            ->withExists(['likes as is_liked_by_user' => function ($query) {
+                $query->where('user_id', Auth::id());
+            }])
+            ->findOrFail($id);
+
+        $relatedPosts = Post::query()
+            ->where('user_id', $post->user_id)
             ->where('id', '!=', $post->id)
             ->latest()
-            ->take(6) // Fetch the latest 6 posts
+            ->take(6)
             ->get();
 
         return view('post.show', compact('post', 'relatedPosts'));
@@ -92,29 +104,22 @@ class PostController extends Controller
 
     public function getPostsByCategory($categoryId)
     {
-        // Fetch the category name using inner join
-        $categoryName = DB::table('posts')
-            ->join('categories', 'posts.category_id', '=', 'categories.id')
-            ->where('posts.category_id', $categoryId)
-            ->select('categories.category_name')
-            ->first();
+        $category = Category::find($categoryId);
 
-        // Log category name for debugging purposes
-        Log::info('Category Name: ', ['category' => $categoryName]);
-
-        // Check if category exists
-        if (! $categoryName) {
+        if (! $category) {
             return redirect()->route('home')->with('error', 'No posts found for this category.');
         }
 
-        // Fetch posts associated with the category
-        $posts = Post::where('category_id', $categoryId)->get();
+        $posts = Post::query()
+            ->where('category_id', $category->id)
+            ->with('user')
+            ->latest()
+            ->get();
 
-        // Pass data to the view
         return view('post.category', [
-            'category' => $categoryName->category_name,
+            'category' => $category->category_name,
             'posts' => $posts,
-            'categoryId' => $categoryId,
+            'categoryId' => $category->id,
         ]);
     }
 
@@ -125,8 +130,8 @@ class PostController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'body' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'body' => 'required|string|max:200000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'category_id' => 'required|exists:categories,id',
         ]);
 
@@ -153,11 +158,12 @@ class PostController extends Controller
      * Show the form for editing the specified post.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     * @return View|Factory
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
+        $this->authorize('update', $post);
+
         $categories = Category::all();
 
         return view('post.edit', compact('post', 'categories'));
@@ -169,8 +175,8 @@ class PostController extends Controller
 
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'body' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'body' => 'required|string|max:200000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'category_id' => 'required|exists:categories,id',
         ]);
 
@@ -211,36 +217,36 @@ class PostController extends Controller
             // Return success as JSON response for AJAX request
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            Log::error('Failed to delete post', [
+                'post_id' => $post->id,
+                'user_id' => Auth::id(),
+                'exception' => $e,
+            ]);
 
-            // Return error as JSON response for AJAX request
-            return response()->json(['success' => false, 'message' => 'Failed to delete post: '.$e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete the post. Please try again.',
+            ], 500);
         }
     }
 
     public function like(Request $request, Post $post)
     {
-        $user = Auth::user();
-        $like = $post->likes()->where('user_id', $user->id);
+        $user = $request->user();
 
-        if ($like->exists()) {
-            // User has already liked the post; unlike it
-            $like->delete();
-            $liked = false;
-        } else {
-            // User has not liked the post; like it
-            $post->likes()->create(['user_id' => $user->id]);
+        $like = $post->likes()->firstOrCreate(['user_id' => $user->id]);
+
+        if ($like->wasRecentlyCreated) {
             $liked = true;
 
-            // Trigger notification
             $post->user->notify(new PostLiked($user, $post));
+        } else {
+            $like->delete();
+            $liked = false;
         }
 
-        // Recalculate the likes count after like/unlike
-        $likeCount = $post->likes()->count();
-
         return response()->json([
-            'likes_count' => $likeCount,
+            'likes_count' => $post->likes()->count(),
             'is_liked' => $liked,
         ]);
     }

@@ -15,30 +15,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->middleware('throttle:30,1')->name('posts.update');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts', [PostController::class, 'store'])->middleware('throttle:30,1')->name('posts.store');
     Route::get('/post/{id}', [PostController::class, 'show'])->name('posts.show');
-    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware('throttle:30,1')->name('posts.destroy');
 
     // reviews and replies routes
-    Route::post('/posts/{post}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::post('/reviews/{review}/replies', [ReplyController::class, 'store'])->name('replies.store');
-    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-    Route::delete('/replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.destroy');
+    Route::post('/posts/{post}/reviews', [ReviewController::class, 'store'])->middleware('throttle:30,1')->name('reviews.store');
+    Route::post('/reviews/{review}/replies', [ReplyController::class, 'store'])->middleware('throttle:30,1')->name('replies.store');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->middleware('throttle:30,1')->name('reviews.destroy');
+    Route::delete('/replies/{reply}', [ReplyController::class, 'destroy'])->middleware('throttle:30,1')->name('replies.destroy');
     // Reviews
     Route::get('reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
-    Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::put('reviews/{review}', [ReviewController::class, 'update'])->middleware('throttle:30,1')->name('reviews.update');
 
     // Replies
     Route::get('replies/{reply}/edit', [ReplyController::class, 'edit'])->name('replies.edit');
-    Route::put('replies/{reply}', [ReplyController::class, 'update'])->name('replies.update');
+    Route::put('replies/{reply}', [ReplyController::class, 'update'])->middleware('throttle:30,1')->name('replies.update');
 
     // route for users' likes
-    Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+    Route::post('/posts/{post}/like', [PostController::class, 'like'])->middleware('throttle:60,1')->name('posts.like');
     // route for notifications
     Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
+});
+
+// Health check (Render)
+Route::get('/up', function () {
+    return response()->json(['status' => 'ok']);
 });
 
 // * ***************************************************************************************************************************************

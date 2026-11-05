@@ -1,4 +1,3 @@
-```dockerfile
 # ==========================================
 # Stage 1: Install PHP dependencies
 # ==========================================
@@ -131,4 +130,3 @@ CMD ["sh", "-c", "\
     php-fpm -D; \
     exec nginx -g 'daemon off;' \
 "]
-```

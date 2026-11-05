@@ -40,13 +40,13 @@ services:
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        value: mysql-3ae44285-fadmaproco-a649.f.aivencloud.com
+        sync: false
       - key: DB_PORT
         value: "16257"
       - key: DB_DATABASE
-        value: defaultdb
+        sync: false
       - key: DB_USERNAME
-        value: avnadmin
+        sync: false
       - key: DB_PASSWORD
         sync: false
       # Aiven requires TLS. Provide the CA cert via MYSQL_ATTR_SSL_CA in the dashboard if needed.

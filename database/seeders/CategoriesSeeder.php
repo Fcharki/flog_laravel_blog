@@ -17,7 +17,7 @@ class CategoriesSeeder extends Seeder
             'Technology', 'Artificial Intelligence', 'Web Development', 'Programming',
             'Psychology', 'Culture', 'DIY & Crafts', 'Environment', 'Food',
             'Education', 'Arts', 'Sports', 'Fashion', 'Business', 'Entertainment',
-            'Finance', 'Health', 'Science', 'Travel', 'Lifestyle',
+            'Finance', 'Health', 'Science', 'Space', 'History', 'Travel', 'Lifestyle',
         ];
 
         // Insert categories into the database (skip any that already exist)

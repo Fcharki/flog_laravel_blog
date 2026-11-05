@@ -127,7 +127,7 @@ CMD ["sh", "-c", "\
     rm -f /etc/nginx/sites-enabled/default; \
     nginx -t; \
     php artisan optimize; \
-    php artisan db:seed --class=CategoriesSeeder --force; \
+    php artisan db:seed --force; \
     php-fpm -D; \
     exec nginx -g 'daemon off;' \
 "]

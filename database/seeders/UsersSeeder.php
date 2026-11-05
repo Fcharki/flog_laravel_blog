@@ -5,65 +5,49 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder
 {
     /**
-     * Insert 6 demo users (with bio + occupation + avatar).
+     * Create non-login author accounts for the seeded sample posts.
      */
     public function run(): void
     {
-        $users = [
+        $authors = [
             [
-                'name' => 'Amina El Idrissi',
-                'email' => 'amina.elidrissi@example.com',
-                'occupation' => 'Software Engineer',
-                'bio' => 'Turning coffee into clean, maintainable code and sharing what I learn along the way.',
+                'name' => 'Samira El Amrani',
+                'email' => 'samira.author@example.invalid',
+                'occupation' => 'Science Writer',
+                'bio' => 'Exploring the ideas and discoveries that help explain our world.',
+                'avatar' => 'https://picsum.photos/seed/flog-author-samira/160/160',
             ],
             [
-                'name' => 'Omar Benali',
-                'email' => 'omar.benali@example.com',
-                'occupation' => 'Data Scientist',
-                'bio' => 'I translate messy data into clear stories and love explaining the math behind the magic.',
+                'name' => 'Youssef Bennani',
+                'email' => 'youssef.author@example.invalid',
+                'occupation' => 'Space Reporter',
+                'bio' => 'Writing about the Moon, distant worlds, and the people who study them.',
+                'avatar' => 'https://picsum.photos/seed/flog-author-youssef/160/160',
             ],
             [
-                'name' => 'Sofia Marquez',
-                'email' => 'sofia.marquez@example.com',
-                'occupation' => 'Product Designer',
-                'bio' => 'Designer who believes great products start with empathy and end with delightful details.',
-            ],
-            [
-                'name' => 'James Carter',
-                'email' => 'james.carter@example.com',
-                'occupation' => 'Journalist & Blogger',
-                'bio' => 'Chasing stories that matter, one byline at a time. Journalism with a human touch.',
-            ],
-            [
-                'name' => 'Layla Hasnaoui',
-                'email' => 'layla.hasnaoui@example.com',
-                'occupation' => 'Content Strategist',
-                'bio' => 'Helping brands find their voice and audiences find their next favorite read.',
-            ],
-            [
-                'name' => 'Noah Williams',
-                'email' => 'noah.williams@example.com',
-                'occupation' => 'Photographer',
-                'bio' => 'Documenting the world through a lens — light, shadow, and everything in between.',
+                'name' => 'Maya Haddad',
+                'email' => 'maya.author@example.invalid',
+                'occupation' => 'Historian',
+                'bio' => 'Connecting events from the past with the questions we ask today.',
+                'avatar' => 'https://picsum.photos/seed/flog-author-maya/160/160',
             ],
         ];
 
-        foreach ($users as $index => $user) {
-            $email = $user['email'];
-
-            User::updateOrCreate(
-                ['email' => $email],
+        foreach ($authors as $author) {
+            User::firstOrCreate(
+                ['email' => $author['email']],
                 [
-                    'name' => $user['name'],
-                    'password' => Hash::make('password'),
+                    'name' => $author['name'],
+                    'password' => Hash::make(Str::random(64)),
                     'email_verified_at' => now(),
-                    'occupation' => $user['occupation'],
-                    'bio' => $user['bio'],
-                    'avatar' => 'https://picsum.photos/seed/flog-user-'.($index + 1).'/160/160',
+                    'occupation' => $author['occupation'],
+                    'bio' => $author['bio'],
+                    'avatar' => $author['avatar'],
                 ]
             );
         }

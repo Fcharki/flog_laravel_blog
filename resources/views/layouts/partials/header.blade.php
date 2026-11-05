@@ -4,7 +4,7 @@
 
             <a class="navbar-brand" href="/">
                 <img
-                    src="{{ asset('flog-logo.png') }}"
+                    src="{{ asset('Flog-logo.png') }}"
                     class="d-inline-block align-top"
                     alt="Flog logo"
                 >

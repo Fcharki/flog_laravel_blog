@@ -58,15 +58,58 @@
 
     /* 1 column for small screens (phones) */
     @media (max-width: 767px) {
+        .home-page-content {
+            margin-top: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+            padding-inline: 0.75rem;
+        }
+
+        .home-hero {
+            margin-inline: 0 !important;
+            padding: 1.5rem 1rem !important;
+        }
+
+        .home-hero .attractive-title {
+            font-size: clamp(2.25rem, 11vw, 3rem);
+            line-height: 1.1;
+        }
+
         .card-container .col-md-4 {
             flex: 0 0 100%;
             max-width: 100%;
         }
-        .intro-text {
-            font-size: 20px;
+
+        .home-page-content > .row {
+            margin-inline: 0 !important;
+            padding-top: 2rem !important;
         }
+
         .search-form {
-            align-items: center;
+            width: 100% !important;
+            padding: 0.5rem !important;
+        }
+
+        .search-form .search-btn {
+            width: 100% !important;
+            min-height: 44px;
+        }
+
+        .intro-text {
+            font-size: 1rem !important;
+            line-height: 1.5;
+        }
+
+        .card-container .card {
+            min-width: 0;
+        }
+
+        .card-container .card-title,
+        .card-container .card-text {
+            overflow-wrap: anywhere;
+        }
+
+        .flog-pagination .pagination {
+            justify-content: center;
         }
     }
 
@@ -163,7 +206,7 @@
 <div class="container my-5 home-page-content">
     @include('layouts.flash-messages')
 
-    <div class="bg-green p-5 rounded shadow-sm mx-5">
+    <div class="bg-green p-5 rounded shadow-sm mx-5 home-hero">
         <h2 class="display-4 mb-4 text-center attractive-title mb-4 text-shadow">Flog <span class="color-greener">Blog</span></h2>
         <p class="mb-4 text-center intro-text h5 text-muted">Spark your curiosity where thoughts and ideas around things actually matter</p>
         <div class="d-flex justify-content-center">

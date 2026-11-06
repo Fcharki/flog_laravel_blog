@@ -53,10 +53,6 @@ class ProfileController extends Controller
         $user->occupation = $request->input('occupation'); // Update occupation
         $user->bio = $request->input('bio'); // Update bio
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
         $user->save();
 
         return redirect()->route('profile.edit')->with('success', 'profile updated successfully !');

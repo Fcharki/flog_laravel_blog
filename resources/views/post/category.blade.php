@@ -14,15 +14,6 @@
     padding-inline: clamp(1rem, 4vw, 3rem);
 }
 
-.post-card-content-image img {
-    display: block;
-    width: 100%;
-    max-height: 180px;
-    object-fit: cover;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-}
-
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -56,20 +47,12 @@
         @forelse($posts as $post)
             <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4">
                 <div class="card w-100">
-                    @if($post->image)
-                        <img src="{{ image_url($post->image) }}" class="card-img-top"
-                             style="width: 100%; height: 150px; object-fit: cover;"
-                             alt="Card image cap">
-                    @else
-                        <img src="/path/to/default/image.jpg" class="card-img-top"
-                             alt="Default Image">
-                    @endif
+                    <img src="{{ $post->body_image_url ?: (image_url($post->image) ?: '/path/to/default/image.jpg') }}" class="card-img-top"
+                         style="width: 100%; height: 150px; object-fit: cover;"
+                         alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p class="card-text">{{ $post->excerpt }}</p>
-                        @if($post->body_image)
-                            <div class="post-card-content-image">{!! $post->body_image !!}</div>
-                        @endif
                         <div class="mt-auto">
                             <a href="{{ route('posts.show', $post->id) }}" class="btn search-btn rounded-4 p-2"
                                style="background-color:#28D49B;">

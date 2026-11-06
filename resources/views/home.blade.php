@@ -36,15 +36,6 @@
         padding-inline: clamp(1rem, 4vw, 3rem);
     }
 
-    .post-card-content-image img {
-        display: block;
-        width: 100%;
-        max-height: 180px;
-        object-fit: cover;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-    }
-
     /* Custom styles for card-container to handle responsive design */
     .card-container {
         display: flex;
@@ -198,20 +189,18 @@
             @foreach($posts as $post)
                 <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4">
                     <div class="card rounded-6 shadow-sm w-100">
-                        <img class="card-img-top rounded-top-4 p-1 border-1" src="{{ image_url($post->image) }}" alt="Card image cap" style="width: 100%; height: 150px; object-fit: cover;">
+                        <img class="card-img-top rounded-top-4 p-1 border-1" src="{{ $post->body_image_url ?: image_url($post->image) }}" alt="Card image cap" style="width: 100%; height: 150px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p class="card-text">{{ $post->excerpt }}</p>
-                            @if($post->body_image)
-                                <div class="post-card-content-image">{!! $post->body_image !!}</div>
-                            @endif
                             <div class="mt-auto">
                                 <a href="{{ route('posts.show', $post->id) }}" class="btn read-btn card-btn mb-3">Read article</a>
-                                <p class="author-meta"><img
-                                src="{{ image_url($post->user->avatar) }}"
-                                alt="{{ $post->user->name }}"
-                                class="rounded-circle border-2 border-black"
-                                style="width: 40px; height: 40px; object-fit: cover;">
+                                <p class="author-meta">
+                                @if($post->user->avatar)
+                                    <img src="{{ image_url($post->user->avatar) }}" alt="{{ $post->user->name }}" class="rounded-circle border-2 border-black" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <span class="rounded-circle border-2 border-black d-inline-flex align-items-center justify-content-center fw-bold" aria-label="{{ $post->user->name }}" style="width: 40px; height: 40px; background: #28D49B; color: white;">{{ $post->user->initials }}</span>
+                                @endif
                                 {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}
                                 </p>
                             </div>
@@ -233,24 +222,22 @@
                     <div class="col-md-4 col-lg-4 d-flex align-items-stretch mb-4 p-2 transition-card">
                         <div class="card rounded-4 shadow-sm w-100">
                             <img class="card-img-top rounded-top-4 p-2 img-fluid"
-                                 src="{{ image_url($post->image) }}"
+                                 src="{{ $post->body_image_url ?: image_url($post->image) }}"
                                  style="width: 100%; height: 200px; object-fit: cover;"
                                  alt="Card image cap">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $post->title }}</h5>
                                 <p class="card-text">{{ $post->excerpt }}</p>
-                                @if($post->body_image)
-                                    <div class="post-card-content-image">{!! $post->body_image !!}</div>
-                                @endif
                                 <div class="mt-auto">
                                     <a href="{{ route('posts.show', $post->id) }}"
                                        class="btn read-btn card-btn my-3">Read article</a>
                                        <hr class="text-muted"/>
                                     <p class="author-meta">
-                                        <img src="{{ image_url($post->user->avatar) }}"
-                                             alt="{{ $post->user->name }}"
-                                             class="rounded-circle border-2 border-black"
-                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                        @if($post->user->avatar)
+                                            <img src="{{ image_url($post->user->avatar) }}" alt="{{ $post->user->name }}" class="rounded-circle border-2 border-black" style="width: 40px; height: 40px; object-fit: cover;">
+                                        @else
+                                            <span class="rounded-circle border-2 border-black d-inline-flex align-items-center justify-content-center fw-bold" aria-label="{{ $post->user->name }}" style="width: 40px; height: 40px; background: #28D49B; color: white;">{{ $post->user->initials }}</span>
+                                        @endif
                                         {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}
                                     </p>
                                 </div>

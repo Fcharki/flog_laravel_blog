@@ -45,6 +45,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function getInitialsAttribute(): string
+    {
+        return mb_strtoupper(mb_substr(trim($this->name), 0, 2));
+    }
+
     /**
      * Get the posts for the user.
      */

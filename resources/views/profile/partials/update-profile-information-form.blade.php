@@ -15,6 +15,8 @@
         <div>
             @if ($user->avatar)
                 <img src="{{ image_url($user->avatar) }}" alt="Avatar" class="mt-2 rounded-full avatar-image" id="current-avatar">
+            @else
+                <span class="mt-2 rounded-full avatar-image avatar-placeholder" id="current-avatar" aria-label="{{ $user->name }}">{{ $user->initials }}</span>
             @endif
             <x-input-label for="avatar" :value="__('Avatar')" />
             <input id="avatar" name="avatar" type="file" class="mt-1 block w-full" accept="image/*" onchange="previewImage(event)"/>
@@ -88,6 +90,15 @@
         height: 200px;
         object-fit: cover;  
         border-radius: 50%;
+    }
+    .avatar-placeholder {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #28D49B;
+        color: white;
+        font-size: 3rem;
+        font-weight: 700;
     }
 </style>
 

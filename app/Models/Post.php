@@ -89,12 +89,14 @@ class Post extends Model
         return Str::limit(strip_tags($this->body), 150); // Adjust the length as needed
     }
 
-    /** Get the first embedded article image for post preview cards. */
-    public function getBodyImageAttribute(): ?string
+    /** Get the first embedded article image URL for post preview cards. */
+    public function getBodyImageUrlAttribute(): ?string
     {
-        return preg_match('/<img\b[^>]*>/i', $this->body, $matches)
-            ? $matches[0]
-            : null;
+        if (! preg_match('/<img\b[^>]*\bsrc=(["\'])(.*?)\1/i', $this->body, $matches)) {
+            return null;
+        }
+
+        return html_entity_decode($matches[2], ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     // In Post.php model

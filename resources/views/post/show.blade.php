@@ -152,6 +152,15 @@
         box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
     }
 
+    .avatar-initials {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #28D49B;
+        color: #fff;
+        font-weight: 700;
+    }
+
     .author-name {
         font-weight: 700;
         color: #17201d;
@@ -817,11 +826,11 @@
             ========================== --}}
             <div class="author-box">
 
-                <img
-                    src="{{ image_url($post->user->avatar) }}"
-                    alt="{{ $post->user->name }}"
-                    class="author-avatar"
-                >
+                @if($post->user->avatar)
+                    <img src="{{ image_url($post->user->avatar) }}" alt="{{ $post->user->name }}" class="author-avatar">
+                @else
+                    <span class="author-avatar avatar-initials" aria-label="{{ $post->user->name }}">{{ $post->user->initials }}</span>
+                @endif
                 <div>
                     <div class="author-name">
                         {{ $post->user->name }}
@@ -933,11 +942,11 @@
 
                             <div class="review-user">
 
-                                <img
-                                    src="{{ image_url($review->user->avatar) }}"
-                                    alt="{{ $review->user->name }}"
-                                    class="review-avatar"
-                                >
+                                @if($review->user->avatar)
+                                    <img src="{{ image_url($review->user->avatar) }}" alt="{{ $review->user->name }}" class="review-avatar">
+                                @else
+                                    <span class="review-avatar avatar-initials" aria-label="{{ $review->user->name }}">{{ $review->user->initials }}</span>
+                                @endif
 
                                 <div>
 
@@ -1090,11 +1099,11 @@
 
                                         <div class="reply-user">
 
-                                            <img
-                                                src="{{ image_url($reply->user->avatar) }}"
-                                                alt="{{ $reply->user->name }}"
-                                                class="reply-avatar"
-                                            >
+                                            @if($reply->user->avatar)
+                                                <img src="{{ image_url($reply->user->avatar) }}" alt="{{ $reply->user->name }}" class="reply-avatar">
+                                            @else
+                                                <span class="reply-avatar avatar-initials" aria-label="{{ $reply->user->name }}">{{ $reply->user->initials }}</span>
+                                            @endif
 
                                             <div>
 

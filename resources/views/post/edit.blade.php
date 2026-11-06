@@ -80,6 +80,7 @@
             }
         }
         // FREE VERSION
+        @if (config('services.tinymce.key'))
         document.addEventListener('DOMContentLoaded', function() {
         // TinyMCE initialization
         tinymce.init({
@@ -88,6 +89,7 @@
             plugins: 'lists fullscreen pagebeark wordcount emoticons codesample charmap autosave autoresize autolink visualblocks table anchor link image save preview',
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image'
         })});
+        @endif
     </script>
 
 </x-app-layout>

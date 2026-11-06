@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Flog | Blog') }}</title>
-    <!-- Place this script in your HTML's <head> -->
-    <script src="https://cdn.tiny.cloud/1/26f6ezvkqjx5utvzvyhqeqv06t9dbtwh0hszelix5jab8fu4/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    @if (config('services.tinymce.key'))
+        <script src="https://cdn.tiny.cloud/1/{{ config('services.tinymce.key') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    @endif
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('icon3.png') }}">
     <!-- Styles -->

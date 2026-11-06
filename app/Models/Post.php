@@ -89,6 +89,14 @@ class Post extends Model
         return Str::limit(strip_tags($this->body), 150); // Adjust the length as needed
     }
 
+    /** Get the first embedded article image for post preview cards. */
+    public function getBodyImageAttribute(): ?string
+    {
+        return preg_match('/<img\b[^>]*>/i', $this->body, $matches)
+            ? $matches[0]
+            : null;
+    }
+
     // In Post.php model
     public function category()
     {

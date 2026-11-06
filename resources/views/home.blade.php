@@ -32,6 +32,19 @@
         margin-bottom: 10px;
     }
 
+    .home-page-content {
+        padding-inline: clamp(1rem, 4vw, 3rem);
+    }
+
+    .post-card-content-image img {
+        display: block;
+        width: 100%;
+        max-height: 180px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
     /* Custom styles for card-container to handle responsive design */
     .card-container {
         display: flex;
@@ -156,7 +169,7 @@
 @endsection
 
 @section('content')
-<div class="container my-5">
+<div class="container my-5 home-page-content">
     @include('layouts.flash-messages')
 
     <div class="bg-green p-5 rounded shadow-sm mx-5">
@@ -189,6 +202,9 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p class="card-text">{{ $post->excerpt }}</p>
+                            @if($post->body_image)
+                                <div class="post-card-content-image">{!! $post->body_image !!}</div>
+                            @endif
                             <div class="mt-auto">
                                 <a href="{{ route('posts.show', $post->id) }}" class="btn read-btn card-btn mb-3">Read article</a>
                                 <p class="author-meta"><img
@@ -223,6 +239,9 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $post->title }}</h5>
                                 <p class="card-text">{{ $post->excerpt }}</p>
+                                @if($post->body_image)
+                                    <div class="post-card-content-image">{!! $post->body_image !!}</div>
+                                @endif
                                 <div class="mt-auto">
                                     <a href="{{ route('posts.show', $post->id) }}"
                                        class="btn read-btn card-btn my-3">Read article</a>

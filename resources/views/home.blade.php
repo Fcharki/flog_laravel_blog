@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Flog | Blog')
+@section('title', config('app.name', 'Flog - Write, Share, Inspire'))
 
 @section('styles')
 <style>

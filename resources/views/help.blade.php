@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Flog | Help Center</title>
+    <title>{{ config('app.name', 'Flog - Write, Share, Inspire') }} | Help Center</title>
 
     <link rel="icon" type="image/png" href="{{ asset('icon3.png') }}">
     <link href="{{ asset('style.css') }}" rel="stylesheet">
